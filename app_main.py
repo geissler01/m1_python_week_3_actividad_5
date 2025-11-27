@@ -6,7 +6,7 @@ students = b_students()
 subjects = b_subjects()
 assignments = b_assignment_1()
 assignments_2 = b_assignment_2()
-assignments_3 = b_assignment_3()
+assignments_3 = b_assignment()
 
 while True:
     menu_main()

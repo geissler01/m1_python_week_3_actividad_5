@@ -70,6 +70,8 @@ def check_fast_id_student(b_dates):
         return -1
 #-----------------------------------------------------------------------------------------
 # ****************************************************************************************
+        # MENÚ 1
+# ****************************************************************************************
 def add_student(b_dates, name, age, id):  # añadir estudiante
     dict_new_student = {
         'nombre': name,
@@ -114,6 +116,7 @@ def del_student(b_dates, id):       # Eliminar estudiante
             break
     return b_dates
 #****************************************************************************************************************
+#       MENÚ 2
 #****************************************************************************************************************
 def check_code_subject (b_dates):  # Busca el codigo
     code_subject = input('CÓDIGO MATERIA: ').strip()
@@ -178,6 +181,7 @@ def del_subject(b_dates, code):
             print(f'Codigo: {code} => Materia: {line['nombre']} => Eliminado exitosamente')
             b_dates.remove(line)
 # *********************************************************************************************************************
+#       MENÚ 3
 # *********************************************************************************************************************
 def check_fast_id_student_vf(b_dates, id):     # buscar id rapidamente en la base de datos
     b_found = False
@@ -206,8 +210,13 @@ def name_subeject_code(b_dates, code):
     else:
         return -1
 #------------------------------------------------------------------------------------------------------------------
+def assign_col(b_students, b_assignments, id_validated):
+    if id_validated not in (assign['documento'] for assign in b_assignments):  # esta condicion debe funcionar
+        pass
+#------------------------------------------------------------------------------------------------------------------
 def add_subject_student (b_students, b_subjects, b_assignment, id_validated, code_validated):
     name_subject = name_subeject_code(b_subjects, code_validated)
+    
     if 'materia' not in b_assignment[0]:
         for student in b_students:
             if student['documento'] == id_validated:
@@ -247,6 +256,7 @@ def del_subject_student(b_dates, code_validated):
             assig['materia'].remove(subject)
     return b_dates
 # ***************************************************************************************************************
+#       MENÚ 3
 # ***************************************************************************************************************
 def add_note_student(b_assignment, id_validated, note, percent):   # Registrar nota a un estudiante (porcentaje, calificación)
     if 'porcentaje' not in b_assignment[0]:
@@ -304,5 +314,15 @@ def del_note_assignment(b_dates, subjects, id_student, code):     # Eliminar not
             return b_dates
             # assign['codigo'].remove(code)
             # assign['materia'].remove(name_subject)
-
+# *************************************************************************************************************
+#           MENÚ 5
+# *************************************************************************************************************
+def detailed_average_student(b_assignment):
+    l_name = max(len(line['name']) for line in b_assignment)
+    print('-'*(l_name + 15))
+    print(f'{'NOMBRE':<{l_name}} | PROMEDIO FINAL')
+    print('-'*(l_name + 15))
+    for assign in b_assignment:
+        average = sum(nota for nota in assign['nota'] )
+        print()
 # --------------------------------------------------------------------------------------------------------------

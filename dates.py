@@ -13,7 +13,7 @@ def b_subjects():
     {'codigo':'111', 'nombre':'Fisica'},
     {'codigo':'112', 'nombre':'Etica'},
     {'codigo':'113', 'nombre':'Español'},
-    {'codigo':'114', 'nombre':'Etica'},
+    {'codigo':'114', 'nombre':'Ingles'},
     {'codigo':'115', 'nombre':'Sociales'},
     ]
     return subjects
@@ -30,9 +30,12 @@ def b_assignment_2():
     ]
     return assignments
 # case 3
-def b_assignment_3():
+def b_assignment():
     assignments = [
-    {'nombre':'Carlos', 'edad':15, 'documento':'1234567896', 'materia':['Fisica', 'Etica'], 'codigo':['111','112'], 'porcentaje':[25,30], 'nota':[4.0, 3.6]},
-    {'nombre':'Julian', 'edad':17, 'documento':'1234567898', 'materia':['Español', 'Etica'], 'codigo':['113','112'], 'porcentaje':[25,30], 'nota':[3.0, 3.9]}
+    {'nombre':'Carlos', 'edad':15, 'documento':'1234567896', 'materia':['Fisica', 'Etica'], '%_acumulado':[100, 80], 'nota':[[4.0], [3.6]]},
+    {'nombre':'Julian', 'edad':17, 'documento':'1234569', 'materia':['Español', 'Etica'], '%_acumulado':[25,30], 'nota':[[3.0], [3.9]]},
+    {'nombre':'Pedro', 'edad':18, 'documento':'1234567', 'materia':['Sociales', 'Etica'], '%_acumulado':[50,60], 'nota':[[3.0, 4.6], [3.9, 3.1]]},
+    {'nombre':'Ana', 'edad':19, 'documento':'1234563', 'materia':['Ingles', 'sociales'], '%_acumulado':[70,80], 'nota':[[3.0, 2.0], [3.9]]},
+    {'nombre':'Elia', 'edad':16, 'documento':'1234568', 'materia':['Español', 'Fisica'], '%_acumulado':[60,90], 'nota':[[3.0, 4.6], [3.9]]}
     ]
     return assignments
