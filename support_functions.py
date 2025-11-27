@@ -150,9 +150,9 @@ def show_subjects(b_dates):
     l_code = max(len(line['codigo']) for line in b_dates)
     l_subject = max(len(line['nombre']) for line in b_dates)
     long_sum = l_code + l_subject + 7
-    print('-'*long_sum + 5)
+    print('-'*(long_sum + 5))
     print(' MATERIAS REGISTRADAS')
-    print('-'*long_sum + 5)
+    print('-'*(long_sum + 5))
     print(f'{'CÓDIGO':<{l_code}} | {'NOMBRE':<{l_subject}}')
     print('-'*long_sum)
     for line in b_dates:
@@ -208,7 +208,7 @@ def name_subeject_code(b_dates, code):
 #------------------------------------------------------------------------------------------------------------------
 def add_subject_student (b_students, b_subjects, b_assignment, id_validated, code_validated):
     name_subject = name_subeject_code(b_subjects, code_validated)
-    if 'materias' not in b_assignment[0]:
+    if 'materia' not in b_assignment[0]:
         for student in b_students:
             if student['documento'] == id_validated:
                 for subject in b_subjects:
@@ -216,21 +216,21 @@ def add_subject_student (b_students, b_subjects, b_assignment, id_validated, cod
                         asig = student
                         asig['codigo'] = []
                         asig['codigo'].append(code_validated)
-                        asig['materias'] = []
-                        asig['materias'].append(name_subject)
+                        asig['materia'] = []
+                        asig['materia'].append(name_subject)
                         b_assignment.append(asig)
                         return b_assignment
     else:
         for assig in b_assignment:
             if id_validated == assig['documento']:
                 assig['codigo'].append(code_validated)
-                assig['materias'].append(name_subject)
+                assig['materia'].append(name_subject)
                 return b_assignment
 # ---------------------------------------------------------------------------------------------------------------
 def check_subject_student(b_dates, id_validated):
     for assig in b_dates:
         if assig['documento'] == id_validated:
-            print(f'\nEstudiante: {assig['nombre']} => Materias: {assig['materias']}')
+            print(f'\nEstudiante: {assig['nombre']} => Materias: {assig['materia']}')
 # ---------------------------------------------------------------------------------------------------------------
 def student_in_subject(b_dates, code_validated):
     list_student = []
@@ -243,8 +243,8 @@ def student_in_subject(b_dates, code_validated):
 def del_subject_student(b_dates, code_validated):
     subject = name_subeject_code(b_dates, code_validated)
     for assig in b_dates[:]:
-        if subject in assig['materias']:
-            assig['materias'].remove(subject)
+        if subject in assig['materia']:
+            assig['materia'].remove(subject)
     return b_dates
 # ***************************************************************************************************************
 # ***************************************************************************************************************
@@ -264,17 +264,18 @@ def add_note_student(b_assignment, id_validated, note, percent):   # Registrar n
                 assig['nota'].append(note)
                 return b_assignment
 # --------------------------------------------------------------------------------------------------------------
-def notas_related_subject(b_dates, code):    # Ver todas las notas asociadas a una materia
+def notes_related_subject(b_dates, subjects, code):    # Ver todas las notas asociadas a una materia
+    name_subject = name_subeject_code(subjects, code)
     print()
     for assig in b_dates:
-        if assig['codigo'] == code:
-            print(f'Notas asociadas a {assig['codigo']} => {' - '.join(assig['nota'])}')
+        if code in assig['codigo']:
+            print(f'Notas asociadas a {name_subject} => {''.join(str(assig['nota']))}') # se puede mejorar
 # --------------------------------------------------------------------------------------------------------------
 def see_note_final_student(b_dates, id_student):    # consultar nota final estudiante
     print()
     for student in b_dates:
         if student['documento'] == id_student:
-            note_prom == 0
+            note_prom = 0
             comulative_percent = 0
             for i,j in zip(student['nota'], student['porcentaje']):
                 note_prom += i*j
@@ -287,13 +288,21 @@ def del_note_assignment(b_dates, subjects, id_student, code):     # Eliminar not
     for assign in b_dates[:]:
         if assign['documento'] == id_student:
             if len(assign['codigo']) == 0:
-                print(f'\nError: El estudiante {assign['nombre']} no tiene notas asignadas')
+                print(f'\nError: El estudiante "{assign['nombre']}" no tiene materias asignadas')
                 return b_dates
             if code not in assign['codigo']:
-                print(f'La materia aún no está asignada')
+                print(f'"{assign['nombre']}" no tiene asignado la materia {name_subject}')
                 return b_dates
-            assign['codigo'].remove(code)
-            assign['materias'].remove(name_subject)
+            if len(assign['nota']) == 0:
+                print(f'\nError: El estudiante "{assign['nombre']}" no tiene notas asignadas')
+                return b_dates
+            dic_materias_notas = {name_subject: assign['nota']}
+            print(dic_materias_notas)
+            note_del = int(input('¿Qué nota desea eliminar?, elija su posicion empezando desde cero: '))
+            note_delated = assign['nota'].pop(note_del)
+            print(f'Nota {note_delated} eliminada de {assign['nombre']}')
+            return b_dates
+            # assign['codigo'].remove(code)
+            # assign['materia'].remove(name_subject)
 
-    pass
 # --------------------------------------------------------------------------------------------------------------

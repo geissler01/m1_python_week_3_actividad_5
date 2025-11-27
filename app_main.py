@@ -1,22 +1,12 @@
 from msm import *
 from support_functions import *
+from dates import *
 
-students = [
-    {'nombre':'Carlos', 'edad':15, 'documento':'1234567896'},
-    {'nombre':'Julian', 'edad':17, 'documento':'1234567898'},
-    {'nombre':'Maria', 'edad':15, 'documento':'1234567'},
-    {'nombre':'Henry', 'edad':15, 'documento':'1234563'},
-    {'nombre':'Liliana', 'edad':15, 'documento':'1234569'}
-]
-
-subjects = [
-    {'codigo':'111', 'nombre':'Fisica'},
-    {'codigo':'112', 'nombre':'Etica'},
-    {'codigo':'113', 'nombre':'Español'},
-]
-
-
-assignments = []
+students = b_students()
+subjects = b_subjects()
+assignments = b_assignment_1()
+assignments_2 = b_assignment_2()
+assignments_3 = b_assignment_3()
 
 while True:
     menu_main()
@@ -159,9 +149,24 @@ while True:
                 if percent_validated == -1:
                     print('\nError. Porcentaje no válido (0 a 100%)')
                     continue
-                assignments = add_note_student(assignments, id_validated, note_validated, percent_validated)
+                assignments_3 = add_note_student(assignments_3, id_validated, note_validated, percent_validated)
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 2:   # ver notas asociadas a una materia
+                code_validated = check_code_subject(subjects)
+                if code_validated == -1:
+                    print('\nError: Código materia no existe')
+                    continue
+                assignments_3 = notes_related_subject(assignments_3, subjects, code_validated)
+
+            # ----------------------------------------------------------------------------------------------------
+            elif opction_validated == 3:    #Consultar promedio final de un estudiante
+                id_validated = check_fast_id_student(students)
+                if id_validated == -1:
+                    print('\nError: El estudiante no existe')
+                    continue
+                see_note_final_student(assignments_3, id_validated)
+            # ----------------------------------------------------------------------------------------------------
+            elif opction_validated == 4:    # Eliminar notas a un estudiante
                 id_validated = check_fast_id_student(students)
                 if id_validated == -1:
                     print('\nError: El estudiante no existe')
@@ -170,18 +175,7 @@ while True:
                 if code_validated == -1:
                     print('\nError: Código materia no existe')
                     continue
-                assignments = del_note_assignment(assignments, id_validated, code_validated)
-
-            # ----------------------------------------------------------------------------------------------------
-            elif opction_validated == 3:    #Consultar promedio final de un estudiante
-                id_validated = check_fast_id_student(students)
-                if id_validated == -1:
-                    print('\nError: El estudiante no existe')
-                    continue
-                see_note_final_student(assignments, id_validated)
-            # ----------------------------------------------------------------------------------------------------
-            elif opction_validated == 4:    # Eliminar notas a un estudiante
-                pass
+                del_note_assignment(assignments_3, subjects, id_validated, code_validated)
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 5:
                 print('\nVolviendo al menú principal')
