@@ -4,9 +4,7 @@ from dates import *
 
 students = b_students()
 subjects = b_subjects()
-assignments = b_assignment_1()
-assignments_2 = b_assignment_2()
-assignments_3 = b_assignment()
+assignments = b_assignment()
 
 while True:
     menu_main()
@@ -90,39 +88,38 @@ while True:
             menu_sec_3()
             opction_validated = filter_option_int()
             # ----------------------------------------------------------------------------------------------------
-            if opction_validated == 1:  # Asignar materia a un estudiante       
-                id_validated = check_fast_id_student(students)
+            if opction_validated == 1:  # Asignar materia a un estudiante     
+                id_validated = check_fast_id_student_2(students, assignments)
                 if id_validated == -1:
-                    print('\nError: El estudiante no existe')
                     continue
-                code_subject = input('CÓDIGO MATERIA: ').strip()
-                code_validated = check_code_subject(subjects, code_subject)
+                code_validated = check_code_subject(subjects)
                 if code_validated == -1:
                     print('\nError: Código materia no existe')
                     continue
-                assignments = add_subject_student (students, subjects, assignments, id_validated, code_validated)
+                assignments = add_subject_student(students, subjects, assignments, id_validated, code_validated)
             # ----------------------------------------------------------------------------------------------------
-            elif opction_validated == 2:  #Ver materia que tiene un estudiante
-                id_validated = check_fast_id_student(students)
+            elif opction_validated == 2:  #Ver materias que tiene un estudiante
+                id_validated = check_fast_id_student_2(students, assignments)
                 if id_validated == -1:
                     print('\nError: El estudiante no existe')
                     continue
                 check_subject_student(assignments, id_validated)
-
             # ----------------------------------------------------------------------------------------------------
-            elif opction_validated == 3:
-                code_validated = check_code_subject(subjects)
+            elif opction_validated == 3:    # Consultar que estudiantes perteneces a una materia
+                code_validated, name_subject = check_code_subject_2(assignments, subjects)
                 if code_validated == -1:
-                    print('\nError: Código materia no existe')
+                    print('\nError: La materia no tiene estudiantes matriculados')
                     continue
-                student_in_subject(assignments, code_validated)
+                student_in_subject(assignments, code_validated, name_subject)
             # ----------------------------------------------------------------------------------------------------
-            elif opction_validated == 4:
-                code_validated = check_code_subject(subjects)
-                if code_validated == -1:
-                    print('\nError: Código materia no existe')
+            elif opction_validated == 4:    # Retirar materias asignadas a un estudiante
+                id_validated = check_fast_id_student_2(students, assignments)
+                if id_validated == -1:
                     continue
-                assignments = del_subject_student(assignments, code_validated)
+                code_validated, name_subject = check_code_subject_2(assignments, subjects)
+                if code_validated == -1:
+                    continue
+                assignments = del_subject_student(assignments, id_validated, code_validated, name_subject)
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 5:
                 print('\nVolviendo al menú principal')
@@ -137,45 +134,40 @@ while True:
             opction_validated = filter_option_int()
             # ----------------------------------------------------------------------------------------------------
             if opction_validated == 1:   #registrar nota
-                id_validated = check_fast_id_student(students)
+                id_validated = check_fast_id_student_2(students, assignments)
                 if id_validated == -1:
-                    print('\nError: El estudiante no existe')
                     continue
                 note_validated = filter_float_note()
-                if id_validated == -1:
+                if note_validated == -1:
                     print('\nError: Nota no válida (0.0 a 5.0)')
                     continue
                 percent_validated = filter_int_percent()
                 if percent_validated == -1:
                     print('\nError. Porcentaje no válido (0 a 100%)')
                     continue
-                assignments_3 = add_note_student(assignments_3, id_validated, note_validated, percent_validated)
+                assignments = add_note_student(students, assignments, id_validated, note_validated, percent_validated)
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 2:   # ver notas asociadas a una materia
-                code_validated = check_code_subject(subjects)
+                code_validated, name_subject = check_code_subject_2(assignments, subjects)
                 if code_validated == -1:
-                    print('\nError: Código materia no existe')
                     continue
-                assignments_3 = notes_related_subject(assignments_3, subjects, code_validated)
+                assignments = notes_related_subject(assignments, code_validated, name_subject)
 
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 3:    #Consultar promedio final de un estudiante
-                id_validated = check_fast_id_student(students)
+                id_validated = check_fast_id_student_2(students, assignments)
                 if id_validated == -1:
-                    print('\nError: El estudiante no existe')
                     continue
-                see_note_final_student(assignments_3, id_validated)
+                see_note_final_student(assignments, id_validated)
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 4:    # Eliminar notas a un estudiante
-                id_validated = check_fast_id_student(students)
+                id_validated = check_fast_id_student_2(students, assignments)
                 if id_validated == -1:
-                    print('\nError: El estudiante no existe')
                     continue
-                code_validated = check_code_subject(subjects)
+                code_validated, name_subject = check_code_subject_2(assignments, subjects)
                 if code_validated == -1:
-                    print('\nError: Código materia no existe')
                     continue
-                del_note_assignment(assignments_3, subjects, id_validated, code_validated)
+                del_note_assignment(assignments, students, id_validated, code_validated, name_subject)
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 5:
                 print('\nVolviendo al menú principal')
