@@ -89,7 +89,7 @@ while True:
             opction_validated = filter_option_int()
             # ----------------------------------------------------------------------------------------------------
             if opction_validated == 1:  # Asignar materia a un estudiante     
-                id_validated = check_fast_id_student_2(students, assignments)
+                id_validated = check_fast_id_student(students)
                 if id_validated == -1:
                     continue
                 code_validated = check_code_subject(subjects)

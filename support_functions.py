@@ -74,10 +74,11 @@ def check_fast_id_student(b_dates):
 def add_student(b_dates, name, age, id):  # añadir estudiante
     dict_new_student = {
         'nombre': name,
-        'nombre': age,
-        'nombre': id
+        'edad': age,
+        'documento': id
     }
-    return b_dates.append(dict_new_student)
+    b_dates.append(dict_new_student)
+    return b_dates
 # --------------------------------------------------------------------------
 def show_students(b_dates):     # listar estudiantes
     l_name = max(len(line['nombre']) for line in b_dates)
