@@ -78,6 +78,7 @@ def add_student(b_dates, name, age, id):  # añadir estudiante
         'documento': id
     }
     b_dates.append(dict_new_student)
+    print('\nEstudiante registrado exitosamente')
     return b_dates
 # --------------------------------------------------------------------------
 def show_students(b_dates):     # listar estudiantes
@@ -368,12 +369,23 @@ def del_note_assignment(b_assignments, b_students, id_validated, code_validated,
 # *************************************************************************************************************
 #           MENÚ 5
 # *************************************************************************************************************
-def detailed_average_student(b_assignment):
-    l_name = max(len(line['name']) for line in b_assignment)
-    print('-'*(l_name + 15))
-    print(f'{'NOMBRE':<{l_name}} | PROMEDIO FINAL')
-    print('-'*(l_name + 15))
-    for assign in b_assignment:
-        average = sum(nota for nota in assign['nota'] )
-        print()
-# --------------------------------------------------------------------------------------------------------------
+def average_student(b_assignments, id_validated):
+
+    pass
+# -------------------------------------------------------------------------------------------------------------
+
+
+def detailed_average_student(b_assignments):
+    # l_name = max(len(line['nombre']) for line in b_assignments)
+    # print('-'*(l_name + 15))
+    # print(f'{'NOMBRE':<{l_name}} | PROMEDIO FINAL')
+    # print('-'*(l_name + 15))
+    for student in b_assignments:
+        for i in range(len(student['materia'])):
+            note_f = 0
+            for j in range(len(student['nota'][i])):
+                note = student['nota'][i][j]
+                percent = (student['%_acumulado'][i][j])/100
+                note_f += round(note * percent, 2)
+            print(f'{student['nombre']} | {student['materia'][i]} | Nota final: {note_f} | Porcentaje evaluado: {sum(student['%_acumulado'][i])}')
+#-------------------------------------------------------------------------------------------------

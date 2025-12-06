@@ -55,6 +55,7 @@ while True:
             opction_validated = filter_option_int()
             # ----------------------------------------------------------------------------------------------------
             if opction_validated == 1:    # Añadir materia
+
                 code_validated = check_code_subject_repit(subjects)
                 if code_validated == -1:
                     continue
@@ -182,7 +183,7 @@ while True:
             opction_validated = filter_option_int()
             # ----------------------------------------------------------------------------------------------------
             if opction_validated == 1:
-                pass
+                detailed_average_student(assignments)
             # ----------------------------------------------------------------------------------------------------
             elif opction_validated == 2:
                 pass
